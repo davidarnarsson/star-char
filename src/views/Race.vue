@@ -1,6 +1,5 @@
 <template>
-  <b-container>
-    <h1>Choose race</h1>
+  <step-container title="Choose a race" @prev="onPrev" @next="onNext">
     <b-row>
       <b-col>
       <b-form-select :options="races" v-model="selectedRace" />
@@ -12,7 +11,7 @@
         </component>
       </b-col>
     </b-row>
-  </b-container>
+  </step-container>
 </template>
 
 <script lang="ts">
@@ -20,14 +19,17 @@ import { Vue, Component } from "vue-property-decorator";
 import { State, Action, Getter, Mutation } from "vuex-class";
 import AndroidRace from "@/components/races/AndroidRace.vue";
 import RaceMutation from "@/models/mutations/RaceMutation";
-import { WizardState } from '@/wizard/types';
+import { WizardState } from "@/wizard/types";
+import StepContainer from "@/components/support/StepContainer.vue";
 @Component({
   components: {
-    "android-race": AndroidRace
+    "android-race": AndroidRace,
+    "step-container": StepContainer
   }
 })
 export default class RaceView extends Vue {
-  @Mutation("setRace", {  namespace: "wizard" }) public setRace : any;
+  @Mutation("setRace", { namespace: "wizard" })
+  public setRace: any;
 
   @State("wizard") public wizard: WizardState | undefined;
 
@@ -39,8 +41,8 @@ export default class RaceView extends Vue {
 
   public selectedRace: string | null = null;
 
-  get race() : RaceMutation | null {
-    return this.wizard && this.wizard.race || null;
+  get race(): RaceMutation | null {
+    return (this.wizard && this.wizard.race) || null;
   }
 
   public races = [
@@ -54,10 +56,16 @@ export default class RaceView extends Vue {
     }
   ];
 
+  public onNext(e: Event): void {
+    this.$router.push("/theme");
+  }
+
+  public onPrev(e: Event): void {
+    this.$router.back();
+  }
+
   public onRace(race: RaceMutation): void {
     this.setRace(race);
-
-    this.$router.push("/theme");
   }
 }
 </script>

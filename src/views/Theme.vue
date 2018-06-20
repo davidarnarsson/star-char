@@ -20,7 +20,7 @@ import { Vue, Component } from "vue-property-decorator";
 import { State, Action, Getter, Mutation } from "vuex-class";
 import { WizardState, WizardMutations } from "@/wizard/types";
 import ScholarTheme from "@/components/themes/ScholarTheme.vue";
-import ThemeMutation from '@/models/mutations/ThemeMutation';
+import ThemeMutation from "@/models/mutations/ThemeMutation";
 
 @Component({
   components: {
@@ -28,7 +28,8 @@ import ThemeMutation from '@/models/mutations/ThemeMutation';
   }
 })
 export default class ThemeView extends Vue {
-  @Mutation("setTheme", {  namespace: "wizard" }) public setTheme : any;
+  @Mutation("setTheme", { namespace: "wizard" })
+  public setTheme: any;
 
   @State("wizard") public wizard: WizardState | undefined;
 
@@ -50,7 +51,7 @@ export default class ThemeView extends Vue {
     }
   ];
 
-  public onTheme(theme: ThemeMutation) : void { 
+  public onTheme(theme: ThemeMutation): void {
     this.setTheme(theme);
   }
 }

@@ -25,6 +25,9 @@ export interface Feature {
 
 export interface Theme {
   name: string;
+  keyAbilityScore: number;
+  keyAbilityScoreName: string;
+  description?: string;
   features: Feature[];
 }
 
