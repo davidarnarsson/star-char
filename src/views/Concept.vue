@@ -1,5 +1,5 @@
 <template>
-  <step-container title="Concept" :prevDisabled="true" :nextDisabled="!playerState || !characterState" @next="formSubmit" v-if="concept">
+  <step-container title="Concept" v-if="concept" :prevDisabled="true" :nextDisabled="!playerState || !characterState" @next="onNext">
       <b-row>
         <b-col>
           <p>First, create a character concept.</p>
@@ -14,6 +14,7 @@
           </b-form-group>
         </b-col>
       </b-row>
+      
   </step-container>
 </template>
 
@@ -22,6 +23,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import { State, Action, Getter, Mutation } from "vuex-class";
 import { WizardState, WizardMutations } from "@/wizard/types";
 import StepContainer from "@/components/support/StepContainer.vue";
+import StepNavigation from "@/components/support/StepNavigation.vue";
 import Mut from "@/models/Mutation";
 import ConceptMutation from "@/models/mutations/ConceptMutation";
 
@@ -29,7 +31,8 @@ const namespace: string = "wizard";
 
 @Component({
   components: {
-    "step-container": StepContainer
+    "step-container": StepContainer,
+    "step-navigation": StepNavigation
   }
 })
 export default class Concept extends Vue {
@@ -60,7 +63,7 @@ export default class Concept extends Vue {
     return this.characterState ? "" : "Please enter your character name.";
   }
 
-  public formSubmit(e: Event) {
+  public onNext(e: Event) {
     e.preventDefault();
     if (this.nullOrEmptyPlayer || this.nullOrEmptyCharacter) return;
 

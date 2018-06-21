@@ -1,5 +1,5 @@
 <template>
-  <step-container title="Choose a race" @prev="onPrev" @next="onNext">
+  <step-container title="Choose a race">
     <b-row>
       <b-col>
       <b-form-select :options="races" v-model="selectedRace" />
@@ -21,6 +21,7 @@ import AndroidRace from "@/components/races/AndroidRace.vue";
 import RaceMutation from "@/models/mutations/RaceMutation";
 import { WizardState } from "@/wizard/types";
 import StepContainer from "@/components/support/StepContainer.vue";
+
 @Component({
   components: {
     "android-race": AndroidRace,
@@ -57,14 +58,15 @@ export default class RaceView extends Vue {
   ];
 
   public onNext(e: Event): void {
-    this.$router.push("/theme");
+    
   }
 
   public onPrev(e: Event): void {
-    this.$router.back();
+    
   }
 
   public onRace(race: RaceMutation): void {
+    debugger;
     this.setRace(race);
   }
 }

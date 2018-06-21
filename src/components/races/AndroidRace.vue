@@ -1,7 +1,5 @@
 <template>
-  <b-form @submit="onSubmit">
-    <alignment-selector v-model="alignment" @change="onSubmit" />
-  </b-form>
+  <alignment-selector v-model="alignment" @change="onSubmit" />
 </template>
 
 <script lang="ts">
