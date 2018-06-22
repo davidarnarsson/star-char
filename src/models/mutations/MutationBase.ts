@@ -1,7 +1,7 @@
 import Mutation from "@/models/Mutation";
 import CharacterSheet from "@/models/CharacterSheet";
 
-export default abstract class MutationBase<T> implements Mutation {
+export default abstract class MutationBase<T extends { name: string }> implements Mutation {
   abstract get order(): number;
   abstract get type(): string;
 
