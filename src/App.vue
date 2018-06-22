@@ -9,9 +9,11 @@
         <b-nav-item>
           <router-link to="/race">2. Race</router-link>
         </b-nav-item>
-
         <b-nav-item>
           <router-link to="/theme">3. Theme</router-link>
+        </b-nav-item>
+         <b-nav-item>
+          <router-link to="/class">4. Class</router-link>
         </b-nav-item>
       </b-nav>
     </b-row>

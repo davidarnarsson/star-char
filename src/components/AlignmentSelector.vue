@@ -1,6 +1,6 @@
 <template>
     <b-form-group label="Select alignment">
-      <b-form-select v-model="value" :options="options" v-on:input="$emit('input', $event);" />
+      <b-form-select v-model="localValue" :options="options"  />
     </b-form-group>
 </template>
 
@@ -15,7 +15,7 @@ export default class AlignmentSelector extends Vue {
   @Prop({ type: String })
   public value!: Alignment;
 
-  public localValue!: Alignment;
+  public localValue: Alignment | "" = "";
 
   @Watch("value")
   public onValue(newVal: Alignment, oldVal: Alignment) {

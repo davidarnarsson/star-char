@@ -1,16 +1,20 @@
 <template>
-  <step-container title="Concept" v-if="concept" :prevDisabled="true" :nextDisabled="!playerState || !characterState" @next="onNext">
+  <step-container :show-navigation="true" title="Concept" :prevDisabled="true" :nextDisabled="!playerState || !characterState" @prev="$router.back()" @next="onNext">
       <b-row>
         <b-col>
           <p>First, create a character concept.</p>
           <b-form-group id="player" label="Enter your name" label-for="player" :state="playerState" :invalid-feedback="nullOrEmptyPlayer">
-            <label for="player name">Your name</label>
-            <b-form-input placeholder="Please enter your name" v-model="concept.player" :state="playerState" />
+            <label for="player">Your name</label>
+            <b-form-input placeholder="Please enter your name" v-model="player" :state="playerState" />
           </b-form-group>
 
           <b-form-group id="character" label="Enter the character name" label-for="character" :state="characterState" :invalid-feedback="nullOrEmptyCharacter">
             <label for="character">Character name</label>
-            <b-form-input placeholder="Please enter your character's name" v-model="concept.name" :state="characterState" />
+            <b-form-input placeholder="Please enter your character's name" v-model="name" :state="characterState" />
+          </b-form-group>
+          <b-form-group id="description" label="Enter a character description" label-for="description">
+            <label for="description">Description</label>
+            <b-textarea v-model="description" />
           </b-form-group>
         </b-col>
       </b-row>
@@ -36,23 +40,31 @@ const namespace: string = "wizard";
   }
 })
 export default class Concept extends Vue {
-  @State("wizard") public wizard: WizardState | undefined;
+  @Getter("concept", { namespace }) public concept!: ConceptMutation;
 
-  @Mutation("setConcept", { namespace })
-  public setConcept: any;
+  @Mutation("setMutation", { namespace })
+  public setMutation: any;
 
-  public concept: ConceptMutation | null = null;
+  private player:string = "";
+  private name:string = "";
+  private description:string = "";
 
-  public mounted() {
-    this.concept = this.wizard && this.wizard.concept ? this.wizard.concept : new ConceptMutation();
+  
+  mounted() {
+    if (this.concept) {
+      this.player = this.concept.player;
+      this.name = this.concept.name;
+      this.description = this.concept.description;
+    }
   }
 
+
   get playerState() {
-    return this.concept && this.concept.player.length > 0;
+    return this.player && this.player.length > 0;
   }
 
   get characterState() {
-    return this.concept && this.concept.name.length > 0;
+    return this.name && this.name.length > 0;
   }
 
   get nullOrEmptyPlayer() {
@@ -67,7 +79,9 @@ export default class Concept extends Vue {
     e.preventDefault();
     if (this.nullOrEmptyPlayer || this.nullOrEmptyCharacter) return;
 
-    this.setConcept(this.concept);
+    const mutation = new ConceptMutation(this.player, this.name, this.description);
+
+    this.setMutation(mutation);
 
     this.$router.push("race");
   }

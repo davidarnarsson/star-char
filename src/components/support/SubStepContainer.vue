@@ -1,11 +1,9 @@
 <template>
-  <b-container>
-    <h1 class="text-center">{{title}}</h1>
-
+  <div>
     <slot></slot>
 
-    <step-navigation v-if="showNavigation" v-bind="{prevDisabled,nextDisabled}" @prev="$emit('prev', $event)" @next="$emit('next', $event)" />      
-  </b-container>
+    <step-navigation v-bind="{prevDisabled,nextDisabled}" @prev="$emit('prev', $event)" @next="$emit('next', $event)" />      
+  </div>
 </template>
  
 <script lang="ts">
@@ -17,11 +15,7 @@ import StepNavigation from '@/components/support/StepNavigation.vue';
     "step-navigation": StepNavigation
   }
 })
-export default class StepContainer extends Vue {
-  @Prop() private title!: string;
-  
-  @Prop() private showNavigation!: boolean; 
-
+export default class SubStepContainer extends Vue {
   @Prop() private prevDisabled!: boolean;
   @Prop() private nextDisabled!: boolean; 
 }

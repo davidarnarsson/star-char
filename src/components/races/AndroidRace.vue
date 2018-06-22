@@ -1,15 +1,22 @@
 <template>
-  <alignment-selector v-model="alignment" @change="onSubmit" />
+  <sub-step-container :prevDisabled="false" :nextDisabled="!alignment" @prev="$router.back()" @next="onSubmit">
+    <alignment-selector v-model="alignment" />
+  </sub-step-container>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from "vue-property-decorator";
-import RaceMutation, { AndroidRaceMutation } from "@/models/mutations/RaceMutation";
+
 import AlignmentSelector from "@/components/AlignmentSelector.vue";
 import Alignment from "@/models/Alignment";
+import AndroidRaceMutation from "@/models/mutations/races/AndroidRaceMutation";
+import SubStepContainer from "@/components/support/SubStepContainer.vue";
 
 @Component({
-  components: { "alignment-selector": AlignmentSelector }
+  components: {
+    "alignment-selector": AlignmentSelector,
+    "sub-step-container": SubStepContainer
+  }
 })
 export default class AndroidRace extends Vue {
   public alignment: Alignment | null = null;

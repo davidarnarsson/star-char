@@ -14,7 +14,6 @@ export interface ClassSkill {}
 
 export interface Class {
   name: string;
-  level: number;
   skills: string[];
 }
 export interface Feature {
@@ -60,6 +59,7 @@ export default class CharacterSheet {
   public equipment: Equipment[] = [];
   public miscEnergyArmorClassBonus: number = 0;
   public miscKineticArmorClassBonus: number = 0;
+  public skillRanks: number = 0;
 
   public isClassSkill(skill: string): boolean {
     // this is probably the wrong implementation, but will do for now, i don't know the

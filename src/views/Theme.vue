@@ -1,6 +1,6 @@
 <template>
    <b-container>
-    <h1 class="text-center">Choose theme</h1>
+    <h1 class="text-center">Choose a theme</h1>
     <b-row>
       <b-col>
       <b-form-select :options="themes" v-model="selectedTheme" />
@@ -8,7 +8,7 @@
     </b-row>
     <b-row v-if="selectedTheme">
       <b-col>
-        <component :is="selectedTheme" @theme="onTheme">
+        <component :is="selectedTheme" :theme="theme" @theme="onTheme">
         </component>
       </b-col>
     </b-row>
@@ -21,25 +21,28 @@ import { State, Action, Getter, Mutation } from "vuex-class";
 import { WizardState, WizardMutations } from "@/wizard/types";
 import ScholarTheme from "@/components/themes/ScholarTheme.vue";
 import ThemeMutation from "@/models/mutations/ThemeMutation";
-
+const namespace = "wizard";
 @Component({
   components: {
-    "scholar-theme": ScholarTheme
+    "Scholar": ScholarTheme
   }
 })
 export default class ThemeView extends Vue {
-  @Mutation("setTheme", { namespace: "wizard" })
-  public setTheme: any;
+  @Mutation("setMutation", { namespace })
+  public setMutation: any;
 
-  @State("wizard") public wizard: WizardState | undefined;
+  @Getter("theme", { namespace }) public theme!: ThemeMutation;
 
-  public mounted() {
-    if (this.wizard && this.wizard.theme) {
-      this.selectedTheme = this.wizard.theme.type;
+  public selectedTheme: string | null = null;
+
+  mounted() {
+    if (this.theme) {
+      this.selectedTheme = this.theme.target.name;
     }
   }
 
-  public selectedTheme: string | null = null;
+
+  /// This should probably somewhere else
   public themes = [
     {
       text: "Choose a theme",
@@ -47,12 +50,14 @@ export default class ThemeView extends Vue {
     },
     {
       text: "Scholar",
-      value: "scholar-theme"
+      value: "Scholar"
     }
   ];
 
   public onTheme(theme: ThemeMutation): void {
-    this.setTheme(theme);
+    this.setMutation(theme);
+    
+    this.$router.push("ability-scores");
   }
 }
 </script>

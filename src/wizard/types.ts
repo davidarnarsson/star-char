@@ -1,17 +1,14 @@
 import Mutation from "@/models/Mutation";
-import { MutationTree } from "vuex";
+import { MutationTree, GetterTree } from "vuex";
 import ConceptMutation from "@/models/mutations/ConceptMutation";
 import RaceMutation from "@/models/mutations/RaceMutation";
 import ThemeMutation from "@/models/mutations/ThemeMutation";
+import State from "@/state";
 
 export interface WizardState {
-  concept: ConceptMutation | null;
-  race: RaceMutation | null;
-  theme: ThemeMutation | null;
+  mutations: Mutation[];
 }
 
 export interface WizardMutations extends MutationTree<WizardState> {
-  setConcept(state: WizardState, concept: ConceptMutation): void;
-  setRace(state: WizardState, race: RaceMutation): void;
-  setTheme(state: WizardState, theme: ThemeMutation): void;
+  setMutation(state: WizardState, mutation: Mutation): void;
 }

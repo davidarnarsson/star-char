@@ -4,6 +4,8 @@ import Concept from "./views/Concept.vue";
 import About from "./views/About.vue";
 import Race from "./views/Race.vue";
 import Theme from "./views/Theme.vue";
+import AbilityScores from "@/views/AbilityScores.vue";
+import PickClass from "@/views/PickClass.vue";
 Vue.use(Router);
 
 export default new Router({
@@ -27,6 +29,16 @@ export default new Router({
       path: "/theme",
       name: "theme",
       component: Theme
+    },
+    {
+      path: "/class",
+      name: "class",
+      component: PickClass
+    },
+    {
+      path: "/ability-scores",
+      name: "ability-scores",
+      component: AbilityScores
     }
   ]
 });
